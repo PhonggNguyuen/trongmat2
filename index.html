@@ -4,392 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chúc Mừng 20/10</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            transition: background 10s ease-in-out;
-        }
-
-        body.dark {
-            background: #1a1a2e; /* Màu gần đen, giống bầu trời đêm */
-        }
-
-        .poem-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-            max-width: 90%;
-        }
-
-        .poem {
-            color: #33CC66; /* Màu xanh lá */
-            font-size: 26px; /* Kích thước chữ to */
-            font-weight: 700; /* Đậm */
-            line-height: 1.6;
-            opacity: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-            background: #FF99FF; /* Nền hồng phấn */
-            padding: 10px 20px;
-            border-radius: 8px;
-        }
-
-        .poem.show {
-            opacity: 1;
-            animation: popIn 1s ease-in-out forwards, fadeOut 1s ease-in-out 2s forwards;
-        }
-
-        @keyframes popIn {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        .falling-text {
-            position: absolute;
-            color: #ff1493;
-            font-size: 24px;
-            font-weight: bold;
-            pointer-events: none;
-            animation: fall linear infinite;
-            white-space: nowrap;
-            z-index: 5;
-            transform: rotate(45deg); /* Nghiêng chữ 45 độ */
-            opacity: 0;
-        }
-
-        .falling-text.show {
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translate(-40vw, -100vh) rotate(45deg); /* Bắt đầu lệch mạnh */
-                opacity: 1;
-            }
-            100% {
-                transform: translate(40vw, 100vh) rotate(45deg); /* Kết thúc lệch mạnh */
-                opacity: 0;
-            }
-        }
-
-        /* Kim tuyến lấp lánh */
-        .sparkle {
-            position: absolute;
-            background: radial-gradient(circle, #fff 10%, #ffeb3b 40%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 2; /* Đặt dưới falling-text và các thành phần chính */
-            animation: sparkle 1.5s infinite, drift 5s linear forwards;
-            opacity: 0;
-        }
-
-        .sparkle.show {
-            opacity: 0.7;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { transform: scale(0.8); opacity: 0.7; }
-            50% { transform: scale(1.3); opacity: 0.3; }
-        }
-
-        @keyframes drift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(10px, 20px); } /* Di chuyển nhẹ để giống kim tuyến rơi */
-        }
-
-        /* Box cha chứa lịch và ảnh */
-        .content-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px; /* Tăng chiều rộng để chứa cả hai box con */
-            display: none;
-            flex-direction: row;
-            gap: 15px;
-            z-index: 10;
-        }
-
-        .content-container.show {
-            display: flex;
-        }
-
-        /* Box ảnh (bên trái) */
-        .image-container {
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 5px; /* Giảm khoảng cách giữa các ảnh */
-            padding: 5px; /* Giảm padding để ảnh sát nhau hơn */
-        }
-
-        .image {
-            opacity: 0;
-            object-fit: contain; /* Giữ tỷ lệ gốc, không bóp méo */
-            max-width: 100%; /* Giới hạn chiều rộng */
-            max-height: 100%; /* Giới hạn chiều cao */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bóng đổ cho ảnh */
-            animation: pulse 1.5s infinite ease-in-out; /* Rung động theo nhịp */
-        }
-
-        .image.show {
-            opacity: 1;
-            animation: popIn 1s ease-in-out forwards, pulse 1.5s infinite ease-in-out; /* Giữ rung động khi hiện */
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); } /* Rung nhẹ để giống nhịp nhạc */
-        }
-
-        #image2 {
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        #image3 {
-            grid-column: 2;
-            grid-row: 1;
-        }
-
-        #image4 {
-            grid-column: 1;
-            grid-row: 2;
-        }
-
-        #image1 {
-            grid-column: 2;
-            grid-row: 2;
-        }
-
-        /* Lịch (bên phải) */
-        .calendar {
-            width: 180px; /* Chiều rộng cố định cho lịch */
-            background: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .calendar h3 {
-            margin: 0 0 10px;
-            color: #ff1493;
-            font-size: 18px;
-        }
-
-        .calendar table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        .calendar th, .calendar td {
-            padding: 5px;
-            width: 25px;
-            height: 25px;
-            text-align: center;
-        }
-
-        .calendar .highlight {
-            background: #ff1493;
-            color: #fff;
-            font-weight: bold;
-            border-radius: 50%;
-        }
-
-        /* Chữ chúc mừng */
-        .greeting {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ff1493;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 10;
-        }
-
-        .greeting.show {
-            display: block;
-        }
-
-        /* Chữ "Anh yêu em!" */
-        .love-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ff0000; /* Màu đỏ */
-            font-size: 36px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 15;
-            white-space: nowrap;
-        }
-
-        .love-message.show {
-            display: block;
-            animation: popIn 1s ease-in-out forwards;
-        }
-
-        /* Responsive cho mobile */
-        @media (max-width: 768px) {
-            .poem {
-                font-size: 22px;
-                padding: 8px 15px;
-            }
-            .falling-text {
-                font-size: 20px;
-            }
-            .sparkle {
-                width: 6px;
-                height: 6px;
-            }
-            .content-container {
-                width: 450px; /* Thu nhỏ box cha */
-                flex-direction: column; /* Xếp dọc trên tablet */
-                gap: 10px;
-            }
-            .image-container {
-                width: 300px;
-                height: 300px;
-                gap: 4px; /* Giảm khoảng cách trên tablet */
-                padding: 4px;
-            }
-            .image {
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Bóng nhỏ hơn trên tablet */
-            }
-            .calendar {
-                width: 300px; /* Lịch rộng hơn trên tablet */
-                font-size: 12px;
-                padding: 10px;
-            }
-            .calendar h3 {
-                font-size: 16px;
-            }
-            .calendar th, .calendar td {
-                width: 25px;
-                height: 25px;
-            }
-            .greeting {
-                font-size: 20px;
-            }
-            .love-message {
-                font-size: 30px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .poem {
-                font-size: 18px;
-                line-height: 1.4;
-                padding: 6px 12px;
-            }
-            .falling-text {
-                font-size: 18px;
-            }
-            .sparkle {
-                width: 4px;
-                height: 4px;
-            }
-            .content-container {
-                width: 250px; /* Thu nhỏ hơn nữa trên mobile */
-            }
-            .image-container {
-                width: 250px;
-                height: 250px;
-                gap: 3px; /* Giảm khoảng cách trên mobile */
-                padding: 3px;
-            }
-            .image {
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Bóng nhỏ hơn trên mobile */
-            }
-            .calendar {
-                width: 250px;
-                font-size: 10px;
-                padding: 8px;
-            }
-            .calendar h3 {
-                font-size: 14px;
-            }
-            .calendar th, .calendar td {
-                width: 20px;
-                height: 20px;
-            }
-            .greeting {
-                font-size: 18px;
-            }
-            .love-message {
-                font-size: 24px;
-            }
-        }
-
-        /* Đảm bảo sắc nét trên iPhone 12 (retina) */
-        * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Ẩn audio */
-        audio {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="./stylse.css">
 </head>
 <body>
-    <audio id="background-music" autoplay>
-        <source src="music.mp3" type="audio/mpeg">
-        Trình duyệt của bạn không hỗ trợ thẻ audio.
+    <div id="start-screen">
+        <button id="start-button">Bắt đầu</button>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="./music.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="poem-container" id="poem-container">
-        <div class="poem" id="line0">Hai mươi tháng mười về đây,</div>
+    <div class="poem-container" id="poem-container" style="display: none;">
+        <div class="poem" id="line0">Hai mươi tháng mười về đây.</div>
         <div class="poem" id="line1">Ngắm em như nắng giữa ngày rực hồng.</div>
         <div class="poem" id="line2">Phan Trà tựa nước trong lòng,</div>
         <div class="poem" id="line3">Dịu dàng nhẹ nhàng mà trong veo say.</div>
         <div class="poem" id="line4">Tình anh gửi trọn từng ngày,</div>
         <div class="poem" id="line5">Như trà thơm ngát, như dây leo quấn.</div>
-        <div class="poem" id="line6">Em là ánh sáng đầu gần,</div>
+        <div class="poem" id="line6">Em là ánh sáng đầu gần.</div>
         <div class="poem" id="line7">Là hoa tươi thắm, là phần đời anh.</div>
-        <div class="poem" id="line8">Mong em mỉm cười rạng danh,</div>
+        <div class="poem" id="line8">Mong em mỉm cười rạng danh.</div>
         <div class="poem" id="line9">Bên anh trọn kiếp song hành bạc đầu.</div>
         <div class="poem" id="line10">Yêu em từng giây từng phút lâu,</div>
         <div class="poem" id="line11">Như trà đượm vị, như câu ca yêu.</div>
     </div>
 
-    <div class="content-container" id="content-container">
+    <div class="content-container" id="content-container" style="display: none;">
         <div class="image-container">
             <img src="anh2.jpg" class="image" id="image2">
             <img src="anh3.jpg" class="image" id="image3">
@@ -399,29 +40,17 @@
         <div class="calendar">
             <h3>Tháng 10 - 2025</h3>
             <table>
-                <tr>
-                    <th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th>
-                </tr>
-                <tr>
-                    <td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                </tr>
-                <tr>
-                    <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
-                </tr>
-                <tr>
-                    <td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td>
-                </tr>
-                <tr>
-                    <td class="highlight">20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
-                </tr>
-                <tr>
-                    <td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td>
-                </tr>
+                <tr><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th></tr>
+                <tr><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+                <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
+                <tr><td class="highlight">20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr>
+                <tr><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td></tr>
             </table>
         </div>
     </div>
 
-    <div class="greeting" id="greeting">Chúc em 20/10 vui vẻ!</div>
+    <div class="greeting" id="greeting" style="display: none;">Chúc em 20/10 vui vẻ!</div>
     <div class="love-message" id="love-message">Anh yêu em!</div>
 
     <script>
@@ -431,7 +60,10 @@
         const poemContainer = document.getElementById('poem-container');
         const greeting = document.getElementById('greeting');
         const loveMessage = document.getElementById('love-message');
-        const audio = document.getElementById('background-music');
+        const startScreen = document.getElementById('start-screen');
+        const startButton = document.getElementById('start-button');
+        const music = document.getElementById('bg-music');
+
         const messages = [
             'Happy Vietnam Women\'s Day! 💕',
             'October 20th - Your Day! 🌹',
@@ -446,174 +78,97 @@
         ];
 
         let isPlaying = false;
-
-        // Hiển thị từng dòng thơ một lần duy nhất
         let currentLine = 0;
+        let currentImage = 0;
+
+        // Hàm hiển thị từng dòng thơ
         function showNextLine() {
             if (currentLine < lines.length) {
                 lines[currentLine].classList.add('show');
                 currentLine++;
-                setTimeout(showNextLine, 3000); // Mỗi dòng hiện 3 giây
+                setTimeout(showNextLine, 3000);
             } else {
-                // Sau khi thơ kết thúc, hiển thị box cha, chữ chúc mừng và bắt đầu kim tuyến
                 setTimeout(() => {
+                    contentContainer.style.display = 'block';
                     contentContainer.classList.add('show');
+                    greeting.style.display = 'block';
                     greeting.classList.add('show');
-                    document.body.classList.add('dark'); // Tối nền
+                    document.body.classList.add('dark');
                     showNextImage();
                     startSparkles();
                 }, 1000);
             }
         }
 
-        // Hiển thị từng ảnh lần lượt, không biến mất
-        let currentImage = 0;
+        // Hàm hiển thị từng ảnh
         function showNextImage() {
             if (currentImage < images.length) {
                 images[currentImage].classList.add('show');
                 currentImage++;
-                setTimeout(showNextImage, 3000); // Mỗi ảnh hiện 3 giây
+                setTimeout(showNextImage, 3000);
             }
         }
 
-        // Bắt đầu hiển thị dòng thơ đầu tiên sau 1 giây
-        function startPoem() {
-            currentLine = 0;
-            currentImage = 0;
-            setTimeout(showNextLine, 1000);
-        }
-
-        // Tạo falling texts
+        // Hàm tạo falling text
         function createFallingText() {
             const text = messages[Math.floor(Math.random() * messages.length)];
             const fallingText = document.createElement('div');
             fallingText.className = 'falling-text';
             fallingText.textContent = text;
-            const startX = (Math.random() * 80 - 40) + 'vw'; // Từ -40vw đến 40vw
-            const startY = (Math.random() * 200 - 100) + 'vh'; // Từ -100vh đến 100vh
+            const startX = (Math.random() * 80 - 40) + 'vw';
+            const startY = (Math.random() * 200 - 100) + 'vh';
             fallingText.style.left = `calc(50% + ${startX})`;
             fallingText.style.top = `calc(${startY})`;
             fallingText.style.animationDuration = (Math.random() * 4 + 3) + 's';
             fallingText.style.fontSize = (Math.random() * 10 + 20) + 'px';
             document.body.appendChild(fallingText);
-
-            // Hiển thị dần khi không bị đè
-            setTimeout(() => {
-                fallingText.classList.add('show');
-            }, 100);
-
-            // Xóa sau khi animation kết thúc
-            setTimeout(() => {
-                fallingText.remove();
-            }, 7000);
+            setTimeout(() => fallingText.classList.add('show'), 100);
+            setTimeout(() => fallingText.remove(), 7000);
         }
 
-        // Tạo kim tuyến lấp lánh
+        // Hàm tạo kim tuyến
         function createSparkle() {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
-            const size = Math.random() * 5 + 3; // Kích thước từ 3px đến 8px
+            const size = Math.random() * 5 + 3;
             sparkle.style.width = `${size}px`;
             sparkle.style.height = `${size}px`;
-            sparkle.style.left = `${Math.random() * 100}vw`; // Vị trí ngẫu nhiên
+            sparkle.style.left = `${Math.random() * 100}vw`;
             sparkle.style.top = `${Math.random() * 100}vh`;
-            sparkle.style.animationDuration = `${Math.random() * 1 + 1}s`; // Thời gian nhấp nháy 1-2s
+            sparkle.style.animationDuration = `${Math.random() * 1 + 1}s`;
             document.body.appendChild(sparkle);
-
-            // Hiển thị kim tuyến
-            setTimeout(() => {
-                sparkle.classList.add('show');
-            }, 100);
-
-            // Xóa sau 5 giây
-            setTimeout(() => {
-                sparkle.remove();
-            }, 5000);
+            setTimeout(() => sparkle.classList.add('show'), 100);
+            setTimeout(() => sparkle.remove(), 5000);
         }
 
-        // Tạo falling text và kim tuyến
         function startFallingText() {
             createFallingText();
-            setTimeout(startFallingText, 200); // Mỗi 0.2 giây
+            setTimeout(startFallingText, 200);
         }
 
         function startSparkles() {
             createSparkle();
             createSparkle();
             createSparkle();
-            createSparkle(); // Tạo 4 kim tuyến mỗi lần để rất dày
-            setTimeout(startSparkles, 100); // Mỗi 0.1 giây
+            createSparkle();
+            setTimeout(startSparkles, 100);
         }
 
-        // Reset trang
-        function resetPage() {
-            // Ẩn tất cả
-            document.body.style.opacity = '0';
-            contentContainer.classList.remove('show');
-            greeting.classList.remove('show');
-            loveMessage.classList.remove('show');
-            document.body.classList.remove('dark');
-            lines.forEach(line => line.classList.remove('show'));
-            images.forEach(image => image.classList.remove('show'));
-            document.querySelectorAll('.sparkle, .falling-text').forEach(el => el.remove());
-
-            // Reset trạng thái
-            currentLine = 0;
-            currentImage = 0;
-
-            // Khôi phục nền và hiển thị lại
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-                document.body.style.background = 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)';
-                startPoem();
-            }, 1000);
-        }
-
-        // Khi nhạc kết thúc
-        audio.addEventListener('ended', () => {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                contentContainer.classList.remove('show');
-                greeting.classList.remove('show');
-                document.querySelectorAll('.sparkle, .falling-text').forEach(el => el.remove());
-                loveMessage.classList.add('show');
-                document.body.style.opacity = '1';
-                setTimeout(() => {
-                    loveMessage.classList.remove('show');
-                    resetPage();
-                    audio.play().catch(err => console.log('Lỗi phát nhạc:', err));
-                }, 3000); // Hiển thị "Anh yêu em!" trong 3 giây
-            }, 500);
+        // Sự kiện khi nhấn nút bắt đầu
+        startButton.addEventListener('click', () => {
+            // Phát nhạc
+            music.play().catch(error => console.log('Lỗi phát nhạc:', error));
+            
+            // Ẩn màn hình khởi động
+            startScreen.style.display = 'none';
+            
+            // Hiển thị nội dung thơ
+            poemContainer.style.display = 'block';
+            
+            // Bắt đầu các hiệu ứng
+            showNextLine();
+            startFallingText();
         });
-
-        // Bắt đầu falling text ngay từ đầu
-        startFallingText();
-
-        // Xử lý autoplay cho máy tính và mobile
-        audio.volume = 0.5; // Đặt âm lượng mặc định là 50%
-        audio.play().catch(error => {
-            console.log('Autoplay bị chặn:', error);
-            document.addEventListener('click', () => {
-                if (audio.paused && !isPlaying) {
-                    isPlaying = true;
-                    audio.play().catch(err => console.log('Lỗi phát nhạc:', err));
-                    startPoem();
-                }
-            }, { once: true });
-            document.addEventListener('touchstart', () => {
-                if (audio.paused && !isPlaying) {
-                    isPlaying = true;
-                    audio.play().catch(err => console.log('Lỗi phát nhạc:', err));
-                    startPoem();
-                }
-            }, { once: true });
-        });
-
-        // Bắt đầu bài thơ nếu nhạc chạy
-        if (!audio.paused) {
-            isPlaying = true;
-            startPoem();
-        }
     </script>
 </body>
 </html>
