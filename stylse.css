@@ -1,32 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: background 10s ease-in-out;
+}
 
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            transition: background 10s ease-in-out;
-        }
+body.dark {
+    background: #1a1a2e;
+}
 
-        body.dark {
-            background: #1a1a2e;
-        }
+.poem-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    max-width: 90%;
+}
 
-        .poem-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 10;
-            max-width: 90%;
-        }
-        #start-screen {
+#start-screen {
     position: fixed;
     top: 0;
     left: 0;
@@ -40,258 +40,529 @@
 }
 
 #start-button {
-    padding: 15px 30px;
+    padding: 20px 40px;
     font-size: 18px;
-    background-color: #ff4d4d;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff1493 100%);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+    position: relative;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#start-button::before {
+    content: "❤️";
+    font-size: 24px;
+    margin-right: 10px;
+    animation: heartbeat 1.5s infinite;
 }
 
 #start-button:hover {
-    background-color: #e60000;
+    background: linear-gradient(135deg, #ff1493 0%, #ff6b6b 100%);
+    transform: scale(1.1);
+    box-shadow: 0 12px 30px rgba(255, 20, 147, 0.6);
 }
 
-        .poem {
-            color: #33CC66;
-            font-size: 26px;
-            font-weight: 700;
-            line-height: 1.6;
-            opacity: 0;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-            background: #FF99FF;
-            padding: 10px 20px;
-            border-radius: 8px;
-        }
+#start-button:active {
+    transform: scale(0.95);
+}
 
-        .poem.show {
-            opacity: 1;
-            animation: popIn 1s ease-in-out forwards, fadeOut 1s ease-in-out 2s forwards;
-        }
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.2); }
+}
 
-        @keyframes popIn {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
+.poem {
+    color: #33CC66;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.6;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    background: #FF99FF;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
 
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
+.poem.show {
+    opacity: 1;
+    animation: popIn 1s ease-in-out forwards, fadeOut 1s ease-in-out 2s forwards;
+}
 
-        .falling-text {
-            position: absolute;
-            color: #ff1493;
-            font-size: 24px;
-            font-weight: bold;
-            pointer-events: none;
-            animation: fall linear infinite;
-            white-space: nowrap;
-            z-index: 5;
-            transform: rotate(45deg);
-            opacity: 0;
-        }
+@keyframes popIn {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
 
-        .falling-text.show {
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
-        }
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
 
-        @keyframes fall {
-            0% { transform: translate(-40vw, -100vh) rotate(45deg); opacity: 1; }
-            100% { transform: translate(40vw, 100vh) rotate(45deg); opacity: 0; }
-        }
+.falling-text {
+    position: absolute;
+    color: #ff1493;
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+    animation: fall linear infinite;
+    white-space: nowrap;
+    z-index: 5;
+    transform: rotate(45deg);
+    opacity: 0;
+}
 
-        .sparkle {
-            position: absolute;
-            background: radial-gradient(circle, #fff 10%, #ffeb3b 40%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 2;
-            animation: sparkle 1.5s infinite, drift 5s linear forwards;
-            opacity: 0;
-        }
+.falling-text.show {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
 
-        .sparkle.show {
-            opacity: 0.7;
-            transition: opacity 0.3s ease-in-out;
-        }
+@keyframes fall {
+    0% { transform: translate(-40vw, -100vh) rotate(45deg); opacity: 1; }
+    100% { transform: translate(40vw, 100vh) rotate(45deg); opacity: 0; }
+}
 
-        @keyframes sparkle {
-            0%, 100% { transform: scale(0.8); opacity: 0.7; }
-            50% { transform: scale(1.3); opacity: 0.3; }
-        }
+.sparkle {
+    position: absolute;
+    background: radial-gradient(circle, #fff 10%, #ffeb3b 40%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    animation: sparkle 1.5s infinite, drift 5s linear forwards;
+    opacity: 0;
+}
 
-        @keyframes drift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(10px, 20px); }
-        }
+.sparkle.show {
+    opacity: 0.7;
+    transition: opacity 0.3s ease-in-out;
+}
 
-        .content-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            display: none;
-            flex-direction: row;
-            gap: 15px;
-            z-index: 10;
-        }
+@keyframes sparkle {
+    0%, 100% { transform: scale(0.8); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 0.3; }
+}
 
-        .content-container.show {
-            display: flex;
-        }
+@keyframes drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(10px, 20px); }
+}
 
-        .image-container {
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 5px;
-            padding: 5px;
-        }
+/* Container chính */
+.content-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 10;
+}
 
-        .image {
-            opacity: 0;
-            object-fit: contain;
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            animation: pulse 1.5s infinite ease-in-out;
-        }
+/* Box chính chứa cả lịch và ảnh */
+.main-box {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
 
-        .image.show {
-            opacity: 1;
-            animation: popIn 1s ease-in-out forwards, pulse 1.5s infinite ease-in-out;
-        }
+/* Lịch nằm dưới cùng */
+.calendar {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-size: 18px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ff1493;
+}
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
+.calendar h3 {
+    margin: 0 0 25px;
+    color: #ff1493;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
 
-        #image2 { grid-column: 1; grid-row: 1; }
-        #image3 { grid-column: 2; grid-row: 1; }
-        #image4 { grid-column: 1; grid-row: 2; }
-        #image1 { grid-column: 2; grid-row: 2; }
+.calendar table {
+    border-collapse: collapse;
+    width: 100%;
+}
 
-        .calendar {
-            width: 180px;
-            background: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            font-size: 14px;
-        }
+.calendar th, .calendar td {
+    padding: 12px;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+}
 
-        .calendar h3 {
-            margin: 0 0 10px;
-            color: #ff1493;
-            font-size: 18px;
-        }
+.calendar th {
+    background: linear-gradient(135deg, #ff1493 0%, #ff6b9c 100%);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
 
-        .calendar table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+.calendar td {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
 
-        .calendar th, .calendar td {
-            padding: 5px;
-            width: 25px;
-            height: 25px;
-            text-align: center;
-        }
+.calendar td:hover {
+    background: rgba(255, 20, 147, 0.1);
+    transform: scale(1.1);
+}
 
-        .calendar .highlight {
-            background: #ff1493;
-            color: #fff;
-            font-weight: bold;
-            border-radius: 50%;
-        }
+.calendar .highlight {
+    background: linear-gradient(135deg, #ff1493 0%, #ff6b9c 100%);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(255, 20, 147, 0.4);
+    transform: scale(1.1);
+}
 
-        .greeting {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ff1493;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            display: none;
-            z-index: 10;
-        }
+/* Container ảnh nằm trên lịch - ảnh tràn đều phía trên và dưới */
+.image-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 15px;
+    padding: 0;
+    z-index: 2;
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
 
-        .greeting.show {
-            display: block;
-        }
+.image {
+    opacity: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%; /* Đặt lại height về 100% để không tràn */
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.5s ease;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    transform: translateY(0); /* Loại bỏ translateY để ảnh không tràn */
+}
 
-        .love-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #ff0000;
-            font-size: 36px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 15;
-            white-space: nowrap;
-        }
+/* Loại bỏ hiệu ứng tràn riêng lẻ cho từng ảnh */
+#image2, #image3, #image1, #image4 {
+    margin-top: 0;
+    height: 100%; /* Đặt lại height về 100% */
+    transform: translateY(0); /* Loại bỏ translateY */
+}
 
-        .love-message.show {
-            display: block;
-            animation: popIn 1s ease-in-out forwards;
-        }
+.image.show {
+    opacity: 1;
+    animation: imagePopIn 1.2s ease-out forwards, float 3s ease-in-out infinite 1.2s;
+    transform: translateY(0) scale(1); /* Cập nhật transform */
+}
 
-        @media (max-width: 768px) {
-            .poem { font-size: 22px; padding: 8px 15px; }
-            .falling-text { font-size: 20px; }
-            .sparkle { width: 6px; height: 6px; }
-            .content-container { width: 450px; flex-direction: column; gap: 10px; }
-            .image-container { width: 300px; height: 300px; gap: 4px; padding: 4px; }
-            .image { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); }
-            .calendar { width: 300px; font-size: 12px; padding: 10px; }
-            .calendar h3 { font-size: 16px; }
-            .calendar th, .calendar td { width: 25px; height: 25px; }
-            .greeting { font-size: 20px; }
-            .love-message { font-size: 30px; }
-        }
+@keyframes imagePopIn {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.7) rotate(-8deg); /* Loại bỏ translateY */
+    }
+    70% {
+        opacity: 0.8;
+        transform: scale(1.05) rotate(2deg); /* Loại bỏ translateY */
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg); /* Loại bỏ translateY */
+    }
+}
 
-        @media (max-width: 480px) {
-            .poem { font-size: 18px; line-height: 1.4; padding: 6px 12px; }
-            .falling-text { font-size: 18px; }
-            .sparkle { width: 4px; height: 4px; }
-            .content-container { width: 250px; }
-            .image-container { width: 250px; height: 250px; gap: 3px; padding: 3px; }
-            .image { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
-            .calendar { width: 250px; font-size: 10px; padding: 8px; }
-            .calendar h3 { font-size: 14px; }
-            .calendar th, .calendar td { width: 20px; height: 20px; }
-            .greeting { font-size: 18px; }
-            .love-message { font-size: 24px; }
-        }
+@keyframes float {
+    0%, 100% { 
+        transform: scale(1); /* Loại bỏ translateY */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    50% { 
+        transform: scale(1.02); /* Loại bỏ translateY */
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+    }
+}
 
-        * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+/* Căn chỉnh lưới ảnh */
+#image2 { 
+    grid-column: 1; 
+    grid-row: 1; 
+}
+#image3 { 
+    grid-column: 2; 
+    grid-row: 1; 
+}
+#image4 { 
+    grid-column: 1; 
+    grid-row: 2; 
+}
+#image1 { 
+    grid-column: 2; 
+    grid-row: 2; 
+}
 
-        audio {
-            display: none;
-        }
+.greeting {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ff1493;
+    font-size: 28px; /* Giảm font-size nếu cần */
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    white-space: nowrap; /* Ngăn chữ xuống dòng */
+}
+
+.greeting.show {
+    display: block;
+    animation: slideUp 1s ease-out;
+}
+
+@keyframes slideUp {
+    0% { 
+        opacity: 0; 
+        transform: translateX(-50%) translateY(50px); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateX(-50%) translateY(0); 
+    }
+}
+
+.love-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff0000;
+    font-size: 42px;
+    font-weight: bold;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 15;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    border: 3px solid #ff1493;
+}
+
+.love-message.show {
+    display: block;
+    animation: heartBeat 1.5s ease-in-out forwards;
+}
+
+@keyframes heartBeat {
+    0% { 
+        opacity: 0; 
+        transform: translate(-50%, -50%) scale(0.5); 
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1); 
+    }
+}
+
+@media (max-width: 768px) {
+    .poem { font-size: 22px; padding: 8px 15px; }
+    .falling-text { font-size: 20px; }
+    .sparkle { width: 6px; height: 6px; }
     
+    .main-box {
+        width: 500px;
+        height: 500px;
+    }
+    
+    .calendar {
+        width: 350px;
+        height: 350px;
+        padding: 25px;
+        font-size: 16px;
+    }
+    
+    .calendar h3 { font-size: 24px; }
+    .calendar th, .calendar td { 
+        width: 35px; 
+        height: 35px; 
+        padding: 8px; 
+    }
+    
+    .image-container {
+        padding: 15px 20px 20px 20px;
+        gap: 12px;
+    }
+    
+    .image {
+        height: 160%;
+        transform: translateY(-30%);
+    }
+    
+    #image2.show, #image3.show, #image1.show, #image4.show {
+        transform: translateY(-30%) scale(1);
+    }
+    
+    @keyframes imagePopIn {
+        0% { 
+            opacity: 0; 
+            transform: translateY(-30%) scale(0.7) rotate(-8deg); 
+        }
+        70% {
+            opacity: 0.8;
+            transform: translateY(-30%) scale(1.05) rotate(2deg);
+        }
+        100% { 
+            opacity: 1; 
+            transform: translateY(-30%) scale(1) rotate(0deg); 
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% { 
+            transform: translateY(-30%) scale(1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        50% { 
+            transform: translateY(-38%) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+        }
+    }
+    
+    .greeting { 
+        font-size: 20px; 
+        padding: 12px 25px;
+    }
+    .love-message { 
+        font-size: 32px; 
+        padding: 15px 30px;
+    }
+    #start-button { padding: 15px 30px; font-size: 16px; }
+    #start-button::before { font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+    .poem { font-size: 18px; line-height: 1.4; padding: 6px 12px; }
+    .falling-text { font-size: 18px; }
+    .sparkle { width: 4px; height: 4px; }
+    
+    .main-box {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .calendar {
+        width: 280px;
+        height: 280px;
+        padding: 20px;
+        font-size: 14px;
+    }
+    
+    .calendar h3 { font-size: 20px; }
+    .calendar th, .calendar td { 
+        width: 30px; 
+        height: 30px; 
+        padding: 6px; 
+    }
+    
+    .image-container {
+        padding: 12px 15px 15px 15px;
+        gap: 10px;
+    }
+    
+    .image {
+        height: 170%;
+        transform: translateY(-35%);
+    }
+    
+    #image2.show, #image3.show, #image1.show, #image4.show {
+        transform: translateY(-35%) scale(1);
+    }
+    
+    @keyframes imagePopIn {
+        0% { 
+            opacity: 0; 
+            transform: translateY(-35%) scale(0.7) rotate(-8deg); 
+        }
+        70% {
+            opacity: 0.8;
+            transform: translateY(-35%) scale(1.05) rotate(2deg);
+        }
+        100% { 
+            opacity: 1; 
+            transform: translateY(-35%) scale(1) rotate(0deg); 
+        }
+    }
+    
+    @keyframes float {
+        0%, 100% { 
+            transform: translateY(-35%) scale(1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        50% { 
+            transform: translateY(-43%) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+        }
+    }
+    
+    .greeting { 
+        font-size: 16px; 
+        padding: 10px 20px;
+    }
+    .love-message { 
+        font-size: 26px; 
+        padding: 12px 25px;
+    }
+    #start-button { padding: 12px 25px; font-size: 14px; }
+    #start-button::before { font-size: 18px; }
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+audio {
+    display: none;
+}

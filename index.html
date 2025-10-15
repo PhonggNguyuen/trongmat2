@@ -16,53 +16,65 @@
     </audio>
 
     <div class="poem-container" id="poem-container" style="display: none;">
-        <div class="poem" id="line0">Hai mươi tháng mười về đây.</div>
-        <div class="poem" id="line1">Ngắm em như nắng giữa ngày rực hồng.</div>
-        <div class="poem" id="line2">Phan Trà tựa nước trong lòng,</div>
-        <div class="poem" id="line3">Dịu dàng nhẹ nhàng mà trong veo say.</div>
-        <div class="poem" id="line4">Tình anh gửi trọn từng ngày,</div>
-        <div class="poem" id="line5">Như trà thơm ngát, như dây leo quấn.</div>
-        <div class="poem" id="line6">Em là ánh sáng đầu gần.</div>
-        <div class="poem" id="line7">Là hoa tươi thắm, là phần đời anh.</div>
-        <div class="poem" id="line8">Mong em mỉm cười rạng danh.</div>
-        <div class="poem" id="line9">Bên anh trọn kiếp song hành bạc đầu.</div>
-        <div class="poem" id="line10">Yêu em từng giây từng phút lâu,</div>
-        <div class="poem" id="line11">Như trà đượm vị, như câu ca yêu.</div>
+        <div class="poem" id="current-line"></div>
     </div>
 
     <div class="content-container" id="content-container" style="display: none;">
-        <div class="image-container">
-            <img src="anh2.jpg" class="image" id="image2">
-            <img src="anh3.jpg" class="image" id="image3">
-            <img src="anh4.jpg" class="image" id="image4">
-            <img src="anh1.jpg" class="image" id="image1">
-        </div>
-        <div class="calendar">
-            <h3>Tháng 10 - 2025</h3>
-            <table>
-                <tr><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th></tr>
-                <tr><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-                <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
-                <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
-                <tr><td class="highlight">20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr>
-                <tr><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td></tr>
-            </table>
+        <div class="main-box">
+            <div class="calendar" id="calendar">
+                <h3>Tháng 10 - 2025</h3>
+                <table>
+                    <tr><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th></tr>
+                    <tr><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                    <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td></tr>
+                    <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
+                    <tr><td class="highlight">20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr>
+                    <tr><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td></tr>
+                </table>
+            </div>
+            
+            <div class="image-container">
+                <img src="anh2.jpg" class="image" id="image2">
+                <img src="anh3.jpg" class="image" id="image3">
+                <img src="anh4.jpg" class="image" id="image4">
+                <img src="anh1.jpg" class="image" id="image1">
+            </div>
         </div>
     </div>
 
     <div class="greeting" id="greeting" style="display: none;">Chúc em 20/10 vui vẻ!</div>
-    <div class="love-message" id="love-message">Anh yêu em!</div>
+    <div class="love-message" id="love-message" style="display: none;">Anh yêu em!</div>
+    <div id="restart-button" style="display: none;">
+        <button onclick="restart()">Quay lại từ đầu</button>
+    </div>
 
     <script>
-        const lines = document.querySelectorAll('.poem');
+        const poemLines = [
+            "Hai mươi tháng mười về đây.",
+            "Ngắm em như nắng giữa ngày rực hồng.",
+            "Phan Trà tựa nước trong lòng,",
+            "Dịu dàng nhẹ nhàng mà trong veo say.",
+            "Tình anh gửi trọn từng ngày,",
+            "Như trà thơm ngát, như dây leo quấn.",
+            "Em là ánh sáng đầu gần.",
+            "Là hoa tươi thắm, là phần đời anh.",
+            "Mong em mỉm cười rạng danh.",
+            "Bên anh trọn kiếp song hành bạc đầu.",
+            "Yêu em từng giây từng phút lâu,",
+            "Như trà đượm vị, như câu ca yêu."
+        ];
+
         const images = document.querySelectorAll('.image');
         const contentContainer = document.getElementById('content-container');
         const poemContainer = document.getElementById('poem-container');
+        const currentLineElement = document.getElementById('current-line');
         const greeting = document.getElementById('greeting');
         const loveMessage = document.getElementById('love-message');
         const startScreen = document.getElementById('start-screen');
         const startButton = document.getElementById('start-button');
         const music = document.getElementById('bg-music');
+        const restartButton = document.getElementById('restart-button');
+        const calendar = document.getElementById('calendar');
 
         const messages = [
             'Happy Vietnam Women\'s Day! 💕',
@@ -77,56 +89,117 @@
             'My heart is yours! 💞'
         ];
 
-        let isPlaying = false;
-        let currentLine = 0;
+        let currentLineIndex = 0;
         let currentImage = 0;
 
-        // Hàm hiển thị từng dòng thơ
-        function showNextLine() {
-            if (currentLine < lines.length) {
-                lines[currentLine].classList.add('show');
-                currentLine++;
-                setTimeout(showNextLine, 3000);
+
+// Sửa thành:
+music.addEventListener('ended', function() {
+    startScreen.style.display = 'flex'; // Hiển thị lại màn hình bắt đầu
+    restartButton.style.display = 'none'; // Ẩn nút restart nếu đang hiển thị
+    music.currentTime = 0; // Đặt lại thời gian nhạc về 0
+    music.pause(); // Tạm dừng nhạc
+});
+
+        function showTextByLetter(element, text, speed = 100, callback) {
+            let index = 0;
+            element.textContent = '';
+            
+            function addLetter() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(addLetter, speed);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            addLetter();
+        }
+
+        function showPoemLineByLine() {
+            if (currentLineIndex < poemLines.length) {
+                const line = poemLines[currentLineIndex];
+                
+                currentLineElement.style.opacity = '0';
+                currentLineElement.textContent = '';
+                
+                setTimeout(() => {
+                    currentLineElement.style.opacity = '1';
+                    currentLineElement.style.transition = 'opacity 0.5s';
+                    
+                    showTextByLetter(currentLineElement, line, 80, () => {
+                        setTimeout(() => {
+                            currentLineElement.style.opacity = '0';
+                            setTimeout(() => {
+                                currentLineIndex++;
+                                showPoemLineByLine();
+                            }, 500);
+                        }, 800);
+                    });
+                }, 100);
+                
             } else {
                 setTimeout(() => {
+                    poemContainer.style.display = 'none';
                     contentContainer.style.display = 'block';
-                    contentContainer.classList.add('show');
                     greeting.style.display = 'block';
-                    greeting.classList.add('show');
                     document.body.classList.add('dark');
-                    showNextImage();
+                    
+                    showCalendarFirst();
                     startSparkles();
                 }, 1000);
             }
         }
 
-        // Hàm hiển thị từng ảnh
+        function showCalendarFirst() {
+            calendar.style.opacity = '1';
+            calendar.style.transition = 'opacity 0.5s';
+            
+            setTimeout(() => {
+                showNextImage();
+                
+                calendar.style.opacity = '0';
+                calendar.style.transition = 'opacity 2s';
+                
+                setTimeout(() => {
+                    calendar.style.display = 'none';
+                }, 2000);
+                
+            }, 4000);
+        }
+
         function showNextImage() {
             if (currentImage < images.length) {
                 images[currentImage].classList.add('show');
                 currentImage++;
                 setTimeout(showNextImage, 3000);
+            } else {
+                setTimeout(() => {
+                    loveMessage.style.display = 'block';
+                    loveMessage.classList.add('show');
+                    restartButton.style.display = 'block';
+                }, 2000);
             }
         }
 
-        // Hàm tạo falling text
         function createFallingText() {
             const text = messages[Math.floor(Math.random() * messages.length)];
             const fallingText = document.createElement('div');
             fallingText.className = 'falling-text';
             fallingText.textContent = text;
-            const startX = (Math.random() * 80 - 40) + 'vw';
-            const startY = (Math.random() * 200 - 100) + 'vh';
-            fallingText.style.left = `calc(50% + ${startX})`;
-            fallingText.style.top = `calc(${startY})`;
+            fallingText.style.left = `${Math.random() * 100}vw`;
             fallingText.style.animationDuration = (Math.random() * 4 + 3) + 's';
             fallingText.style.fontSize = (Math.random() * 10 + 20) + 'px';
             document.body.appendChild(fallingText);
-            setTimeout(() => fallingText.classList.add('show'), 100);
             setTimeout(() => fallingText.remove(), 7000);
         }
 
-        // Hàm tạo kim tuyến
+        function startFallingText() {
+            createFallingText();
+            setTimeout(startFallingText, 300);
+        }
+
         function createSparkle() {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
@@ -137,36 +210,25 @@
             sparkle.style.top = `${Math.random() * 100}vh`;
             sparkle.style.animationDuration = `${Math.random() * 1 + 1}s`;
             document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.classList.add('show'), 100);
-            setTimeout(() => sparkle.remove(), 5000);
-        }
-
-        function startFallingText() {
-            createFallingText();
-            setTimeout(startFallingText, 200);
+            setTimeout(() => sparkle.remove(), 4000);
         }
 
         function startSparkles() {
             createSparkle();
             createSparkle();
             createSparkle();
-            createSparkle();
-            setTimeout(startSparkles, 100);
+            setTimeout(startSparkles, 150);
         }
 
-        // Sự kiện khi nhấn nút bắt đầu
+        function restart() {
+            location.reload();
+        }
+
         startButton.addEventListener('click', () => {
-            // Phát nhạc
-            music.play().catch(error => console.log('Lỗi phát nhạc:', error));
-            
-            // Ẩn màn hình khởi động
+            music.play().catch(err => console.log('Không phát được nhạc:', err));
             startScreen.style.display = 'none';
-            
-            // Hiển thị nội dung thơ
             poemContainer.style.display = 'block';
-            
-            // Bắt đầu các hiệu ứng
-            showNextLine();
+            showPoemLineByLine();
             startFallingText();
         });
     </script>
